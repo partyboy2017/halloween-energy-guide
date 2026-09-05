@@ -155,6 +155,77 @@
                 0 0 12px rgba(255, 133, 0, 0.18);
         }
 
+        /* Hide native number-input arrows */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        /* Mobile-friendly quantity controls */
+        .number-control {
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+            gap: 6px;
+        }
+
+        .number-control input[type="number"] {
+            flex: 1;
+            min-width: 0;
+            text-align: center;
+        }
+
+        .qty-button {
+            width: 48px;
+            min-width: 48px;
+            min-height: 46px;
+            border: 1px solid #69457a;
+            border-radius: 8px;
+            background:
+                linear-gradient(
+                    145deg,
+                    #321746,
+                    #180c22
+                );
+            color: #ff9d2e;
+            font-size: 25px;
+            font-weight: bold;
+            line-height: 1;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            transition:
+                background 0.15s ease,
+                border-color 0.15s ease,
+                transform 0.08s ease;
+        }
+
+        .qty-button:hover {
+            border-color: #ff7900;
+            background:
+                linear-gradient(
+                    145deg,
+                    #49205f,
+                    #24102f
+                );
+        }
+
+        .qty-button:active {
+            transform: scale(0.94);
+            border-color: #ff7900;
+            background: #3a164b;
+        }
+
+        .qty-button:focus-visible {
+            outline: 2px solid #ff8500;
+            outline-offset: 2px;
+        }
+
         .toggle-row {
             display: flex;
             align-items: center;
@@ -416,7 +487,7 @@
 
         .qty-input {
             max-width: 110px;
-            text-align: right;
+            text-align: center;
         }
 
         .card:nth-of-type(2) {
@@ -483,7 +554,45 @@
             }
 
             .qty-input {
-                max-width: 80px;
+                max-width: none;
+            }
+
+            .number-control {
+                gap: 5px;
+            }
+
+            .qty-button {
+                width: 52px;
+                min-width: 52px;
+                min-height: 48px;
+                font-size: 27px;
+            }
+
+            .number-control input[type="number"] {
+                min-height: 48px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            table {
+                font-size: 13px;
+            }
+
+            th,
+            td {
+                padding: 7px 4px;
+            }
+
+            th:nth-child(2),
+            td:nth-child(2) {
+                display: none;
+            }
+
+            .qty-button {
+                width: 46px;
+                min-width: 46px;
             }
         }
 
@@ -759,13 +868,7 @@
                     <td>Can of Goose Juice</td>
                     <td>5</td>
                     <td>
-                        <input
-                            class="qty-input"
-                            type="number"
-                            id="canGooseJuice"
-                            min="0"
-                            value="0"
-                        >
+                        <input class="qty-input" type="number" id="canGooseJuice" min="0" value="0">
                     </td>
                     <td id="canGooseJuiceEnergy">0</td>
                 </tr>
@@ -774,13 +877,7 @@
                     <td>Can of Damp Valley</td>
                     <td>10</td>
                     <td>
-                        <input
-                            class="qty-input"
-                            type="number"
-                            id="canDampValley"
-                            min="0"
-                            value="0"
-                        >
+                        <input class="qty-input" type="number" id="canDampValley" min="0" value="0">
                     </td>
                     <td id="canDampValleyEnergy">0</td>
                 </tr>
@@ -789,13 +886,7 @@
                     <td>Can of Crocozade</td>
                     <td>15</td>
                     <td>
-                        <input
-                            class="qty-input"
-                            type="number"
-                            id="canCrocozade"
-                            min="0"
-                            value="0"
-                        >
+                        <input class="qty-input" type="number" id="canCrocozade" min="0" value="0">
                     </td>
                     <td id="canCrocozadeEnergy">0</td>
                 </tr>
@@ -804,13 +895,7 @@
                     <td>Can of Munster</td>
                     <td>20</td>
                     <td>
-                        <input
-                            class="qty-input"
-                            type="number"
-                            id="canMunster"
-                            min="0"
-                            value="0"
-                        >
+                        <input class="qty-input" type="number" id="canMunster" min="0" value="0">
                     </td>
                     <td id="canMunsterEnergy">0</td>
                 </tr>
@@ -819,13 +904,7 @@
                     <td>Can of Santa Shooters</td>
                     <td>20</td>
                     <td>
-                        <input
-                            class="qty-input"
-                            type="number"
-                            id="canSantaShooters"
-                            min="0"
-                            value="0"
-                        >
+                        <input class="qty-input" type="number" id="canSantaShooters" min="0" value="0">
                     </td>
                     <td id="canSantaShootersEnergy">0</td>
                 </tr>
@@ -834,13 +913,7 @@
                     <td>Can of Red Cow</td>
                     <td>25</td>
                     <td>
-                        <input
-                            class="qty-input"
-                            type="number"
-                            id="canRedCow"
-                            min="0"
-                            value="0"
-                        >
+                        <input class="qty-input" type="number" id="canRedCow" min="0" value="0">
                     </td>
                     <td id="canRedCowEnergy">0</td>
                 </tr>
@@ -849,13 +922,7 @@
                     <td>Can of Rockstar Rudolph</td>
                     <td>25</td>
                     <td>
-                        <input
-                            class="qty-input"
-                            type="number"
-                            id="canRockstarRudolph"
-                            min="0"
-                            value="0"
-                        >
+                        <input class="qty-input" type="number" id="canRockstarRudolph" min="0" value="0">
                     </td>
                     <td id="canRockstarRudolphEnergy">0</td>
                 </tr>
@@ -864,13 +931,7 @@
                     <td>Can of Taurine Elite</td>
                     <td>30</td>
                     <td>
-                        <input
-                            class="qty-input"
-                            type="number"
-                            id="canTaurineElite"
-                            min="0"
-                            value="0"
-                        >
+                        <input class="qty-input" type="number" id="canTaurineElite" min="0" value="0">
                     </td>
                     <td id="canTaurineEliteEnergy">0</td>
                 </tr>
@@ -879,13 +940,7 @@
                     <td>Can of X-MASS</td>
                     <td>30</td>
                     <td>
-                        <input
-                            class="qty-input"
-                            type="number"
-                            id="canXMass"
-                            min="0"
-                            value="0"
-                        >
+                        <input class="qty-input" type="number" id="canXMass" min="0" value="0">
                     </td>
                     <td id="canXMassEnergy">0</td>
                 </tr>
@@ -1061,6 +1116,106 @@
     </div>
 
 </div>
+
+<script>
+/*
+ * Add mobile-friendly +/- controls to every number input.
+ * The original input IDs and values are preserved so script.js
+ * continues to work normally.
+ */
+document.addEventListener("DOMContentLoaded", function () {
+
+    const numberInputs = document.querySelectorAll(
+        'input[type="number"]'
+    );
+
+    numberInputs.forEach(function (input) {
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "number-control";
+
+        input.parentNode.insertBefore(wrapper, input);
+        wrapper.appendChild(input);
+
+        const minusButton = document.createElement("button");
+        minusButton.type = "button";
+        minusButton.className = "qty-button";
+        minusButton.textContent = "−";
+        minusButton.setAttribute(
+            "aria-label",
+            "Decrease " + (input.id || "value")
+        );
+
+        const plusButton = document.createElement("button");
+        plusButton.type = "button";
+        plusButton.className = "qty-button";
+        plusButton.textContent = "+";
+        plusButton.setAttribute(
+            "aria-label",
+            "Increase " + (input.id || "value")
+        );
+
+        wrapper.insertBefore(minusButton, input);
+        wrapper.appendChild(plusButton);
+
+        function getStep() {
+            const step = parseFloat(input.step);
+            return Number.isFinite(step) && step > 0 ? step : 1;
+        }
+
+        function getMin() {
+            const min = parseFloat(input.min);
+            return Number.isFinite(min) ? min : 0;
+        }
+
+        function getMax() {
+            const max = parseFloat(input.max);
+            return Number.isFinite(max) ? max : Infinity;
+        }
+
+        function updateValue(change) {
+
+            let current = parseFloat(input.value);
+
+            if (!Number.isFinite(current)) {
+                current = getMin();
+            }
+
+            const newValue = Math.min(
+                getMax(),
+                Math.max(
+                    getMin(),
+                    current + change
+                )
+            );
+
+            input.value = newValue;
+
+            input.dispatchEvent(
+                new Event("input", {
+                    bubbles: true
+                })
+            );
+
+            input.dispatchEvent(
+                new Event("change", {
+                    bubbles: true
+                })
+            );
+        }
+
+        minusButton.addEventListener("click", function () {
+            updateValue(-getStep());
+        });
+
+        plusButton.addEventListener("click", function () {
+            updateValue(getStep());
+        });
+
+    });
+
+});
+</script>
 
 <script src="script.js"></script>
 
