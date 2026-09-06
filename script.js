@@ -5,27 +5,70 @@ const LSD_ENERGY = 50;
 
 const NEWSLETTER_ENERGY = 250;
 
-const DONATOR_ENERGY_PER_HOUR = 30;
+const DONATOR_ENERGY_PER_HOUR = 5;
 const NON_DONATOR_ENERGY_PER_HOUR = 5;
+
+const DONATOR_MAX_ENERGY = 150;
+const NON_DONATOR_MAX_ENERGY = 100;
 
 const POINT_REFILL_ENERGY = 100;
 const HOTEL_REFILL_ENERGY = 150;
-
-
-// ------------------------------------------------------------
-// Revitalize settings
-// ------------------------------------------------------------
 
 const REVITALIZE_MIN = 10;
 const REVITALIZE_MAX = 24;
 const REVITALIZE_DEFAULT = 10;
 
 
+/*
+ * Torn energy drinks
+ *
+ * Base energy values from the Torn Wiki.
+ */
+const ENERGY_CANS = [
+    {
+        id: "canGooseJuice",
+        energy: 5
+    },
+    {
+        id: "canDampValley",
+        energy: 10
+    },
+    {
+        id: "canCrocozade",
+        energy: 15
+    },
+    {
+        id: "canMunster",
+        energy: 20
+    },
+    {
+        id: "canSantaShooters",
+        energy: 20
+    },
+    {
+        id: "canRedCow",
+        energy: 25
+    },
+    {
+        id: "canRockstarRudolph",
+        energy: 25
+    },
+    {
+        id: "canTaurineElite",
+        energy: 30
+    },
+    {
+        id: "canXMass",
+        energy: 30
+    }
+];
+
+
 // ------------------------------------------------------------
-// Utility
+// Helper functions
 // ------------------------------------------------------------
 
-function numberValue(id) {
+function getNumber(id) {
 
     const element = document.getElementById(id);
 
@@ -33,13 +76,11 @@ function numberValue(id) {
         return 0;
     }
 
-    const value = Number(element.value);
+    const value = parseFloat(element.value);
 
-    if (!Number.isFinite(value) || value < 0) {
-        return 0;
-    }
-
-    return value;
+    return Number.isFinite(value) && value >= 0
+        ? value
+        : 0;
 }
 
 
@@ -55,289 +96,132 @@ function setText(id, value) {
 
 function formatNumber(value, decimals = 0) {
 
-    return Number(value).toLocaleString(undefined, {
+    if (!Number.isFinite(value)) {
+        value = 0;
+    }
+
+    return value.toLocaleString(undefined, {
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals
     });
+}
 
+
+function clamp(value, min, max) {
+
+    return Math.min(
+        max,
+        Math.max(min, value)
+    );
 }
 
 
 // ------------------------------------------------------------
-// Energy Cans
+// Energy can calculations
 // ------------------------------------------------------------
-
-const ENERGY_CANS = [
-
-    {
-        input: "canGooseJuice",
-        output: "canGooseJuiceEnergy",
-        energy: 5
-    },
-
-    {
-        input: "canDampValley",
-        output: "canDampValleyEnergy",
-        energy: 10
-    },
-
-    {
-        input: "canCrocozade",
-        output: "canCrocozadeEnergy",
-        energy: 15
-    },
-
-    {
-        input: "canMunster",
-        output: "canMunsterEnergy",
-        energy: 20
-    },
-
-    {
-        input: "canSantaShooters",
-        output: "canSantaShootersEnergy",
-        energy: 20
-    },
-
-    {
-        input: "canRedCow",
-        output: "canRedCowEnergy",
-        energy: 25
-    },
-
-    {
-        input: "canRockstarRudolph",
-        output: "canRockstarRudolphEnergy",
-        energy: 25
-    },
-
-    {
-        input: "canTaurineElite",
-        output: "canTaurineEliteEnergy",
-        energy: 30
-    },
-
-    {
-        input: "canXMass",
-        output: "canXMassEnergy",
-        energy: 30
-    }
-
-];
-
 
 function calculateCanEnergy() {
 
     let total = 0;
 
-    ENERGY_CANS.forEach(can => {
+    ENERGY_CANS.forEach(function (can) {
 
-        const quantity = numberValue(can.input);
-
-        const energy =
-            quantity * can.energy;
+        const quantity = getNumber(can.id);
+        const energy = quantity * can.energy;
 
         total += energy;
 
         setText(
-            can.output,
+            can.id + "Energy",
             formatNumber(energy)
         );
-
     });
-
 
     setText(
         "canTotalEnergy",
         formatNumber(total)
     );
 
-
     return total;
 }
 
 
 // ------------------------------------------------------------
-// Revitalize Weapon Bonus Hits
+// Energy refills
 // ------------------------------------------------------------
 
-function calculateRevitalize() {
+function calculateRefillEnergy() {
 
-    let chance =
-        Math.round(
-            numberValue("revitalizeChance")
-        );
+    const inactivityHours = getNumber("inactivityHours");
 
-    const hits =
-        numberValue("revitalizeHits");
+    const donatorToggle =
+        document.getElementById("donatorStatus");
 
-
-    if (chance < REVITALIZE_MIN) {
-        chance = REVITALIZE_MIN;
-    }
-
-
-    if (chance > REVITALIZE_MAX) {
-        chance = REVITALIZE_MAX;
-    }
-
-
-    const chanceInput =
-        document.getElementById(
-            "revitalizeChance"
-        );
-
-
-    if (chanceInput) {
-        chanceInput.value = chance;
-    }
-
-
-    const probability =
-        chance / 100;
-
-
-    let expectedTotalHits = 0;
-    let expectedBonusHits = 0;
-
-
-    if (probability < 1) {
-
-        expectedTotalHits =
-            hits / (1 - probability);
-
-        expectedBonusHits =
-            expectedTotalHits - hits;
-
-    }
-
-
-    setText(
-        "revitalizeChanceResult",
-        `${chance}%`
-    );
-
-
-    setText(
-        "revitalizeHitsResult",
-        formatNumber(hits)
-    );
-
-
-    setText(
-        "revitalizeBonusHits",
-        formatNumber(expectedBonusHits, 2)
-    );
-
-
-    setText(
-        "revitalizeTotalHits",
-        formatNumber(expectedTotalHits, 2)
-    );
-
-
-    setText(
-        "revitalizeProgressText",
-        `${chance}%`
-    );
-
-
-    const progressBar =
-        document.getElementById(
-            "revitalizeProgressBar"
-        );
-
-
-    if (progressBar) {
-
-        const progress =
-            (
-                (chance - REVITALIZE_MIN) /
-                (REVITALIZE_MAX - REVITALIZE_MIN)
-            ) * 100;
-
-        progressBar.style.width =
-            `${Math.max(0, Math.min(100, progress))}%`;
-
-    }
-
-}
-
-
-// ------------------------------------------------------------
-// Refills
-// ------------------------------------------------------------
-
-function calculateRefills() {
-
-    const inactivityHours =
-        numberValue("inactivityHours");
-
-
-    const donatorStatusElement =
-        document.getElementById(
-            "donatorStatus"
-        );
-
-
-    const donatorStatus =
-        donatorStatusElement
-            ? donatorStatusElement.checked
+    const isDonator =
+        donatorToggle
+            ? donatorToggle.checked
             : false;
 
 
-    const pointRefills =
-        numberValue("pointRefills");
+    /*
+     * Torn naturally regenerates 5 energy per hour.
+     *
+     * Donator:
+     * 150 maximum energy
+     *
+     * Non-donator:
+     * 100 maximum energy
+     *
+     * For this planner, inactivity hours represent
+     * the amount of natural regeneration being counted.
+     */
+    const refillRate = isDonator
+        ? DONATOR_ENERGY_PER_HOUR
+        : NON_DONATOR_ENERGY_PER_HOUR;
 
+    const maxEnergy = isDonator
+        ? DONATOR_MAX_ENERGY
+        : NON_DONATOR_MAX_ENERGY;
+
+
+    /*
+     * Cap natural regeneration at the player's
+     * normal maximum energy bar.
+     */
+    const inactivityEnergy = Math.min(
+        inactivityHours * refillRate,
+        maxEnergy
+    );
+
+
+    const pointRefills =
+        getNumber("pointRefills");
 
     const hotelRefills =
-        numberValue("hotelRefills");
-
-
-    const refillRate =
-        donatorStatus
-            ? DONATOR_ENERGY_PER_HOUR
-            : NON_DONATOR_ENERGY_PER_HOUR;
-
-
-    const inactivityEnergy =
-        inactivityHours *
-        refillRate;
+        getNumber("hotelRefills");
 
 
     const pointEnergy =
-        pointRefills *
-        POINT_REFILL_ENERGY;
-
+        pointRefills * POINT_REFILL_ENERGY;
 
     const hotelEnergy =
-        hotelRefills *
-        HOTEL_REFILL_ENERGY;
-
-
-    const total =
-        inactivityEnergy +
-        pointEnergy +
-        hotelEnergy;
+        hotelRefills * HOTEL_REFILL_ENERGY;
 
 
     setText(
         "refillRate",
-        `${formatNumber(refillRate)} energy/hour`
+        formatNumber(refillRate) + " energy/hour"
     );
-
 
     setText(
         "inactivityRefillEnergy",
         formatNumber(inactivityEnergy)
     );
 
-
     setText(
         "pointRefillEnergy",
         formatNumber(pointEnergy)
     );
-
 
     setText(
         "hotelRefillEnergy",
@@ -345,83 +229,77 @@ function calculateRefills() {
     );
 
 
-    const statusText =
-        document.getElementById(
-            "donatorStatusText"
-        );
-
-
-    if (statusText) {
-
-        statusText.textContent =
-            donatorStatus
-                ? "ON"
-                : "OFF";
-
-
-        statusText.classList.toggle(
-            "on",
-            donatorStatus
-        );
-
-    }
-
-
-    return total;
+    return (
+        inactivityEnergy +
+        pointEnergy +
+        hotelEnergy
+    );
 }
 
 
 // ------------------------------------------------------------
-// Main Energy Calculator
+// Donator status display
+// ------------------------------------------------------------
+
+function updateDonatorStatus() {
+
+    const toggle =
+        document.getElementById("donatorStatus");
+
+    const statusText =
+        document.getElementById("donatorStatusText");
+
+    if (!toggle || !statusText) {
+        return;
+    }
+
+    if (toggle.checked) {
+
+        statusText.textContent = "ON";
+
+    } else {
+
+        statusText.textContent = "OFF";
+    }
+}
+
+
+// ------------------------------------------------------------
+// Main energy calculator
 // ------------------------------------------------------------
 
 function calculateEnergy() {
 
     const targetHits =
-        numberValue("targetHits");
-
+        getNumber("targetHits");
 
     const currentEnergy =
-        numberValue("currentEnergy");
-
+        getNumber("currentEnergy");
 
     const xanaxQty =
-        numberValue("xanaxQty");
-
+        getNumber("xanaxQty");
 
     const lsdQty =
-        numberValue("lsdQty");
-
-
-    const newsletterElement =
-        document.getElementById(
-            "newsletter"
-        );
-
-
-    const newsletter =
-        newsletterElement
-            ? newsletterElement.checked
-            : false;
+        getNumber("lsdQty");
 
 
     const requiredEnergy =
-        targetHits *
-        ENERGY_PER_HIT;
+        targetHits * ENERGY_PER_HIT;
 
 
     const xanaxEnergy =
-        xanaxQty *
-        XANAX_ENERGY;
-
+        xanaxQty * XANAX_ENERGY;
 
     const lsdEnergy =
-        lsdQty *
-        LSD_ENERGY;
+        lsdQty * LSD_ENERGY;
 
+
+    const newsletterElement =
+        document.getElementById("newsletter");
 
     const newsletterEnergy =
-        newsletter
+        newsletterElement &&
+        newsletterElement.checked
             ? NEWSLETTER_ENERGY
             : 0;
 
@@ -431,7 +309,7 @@ function calculateEnergy() {
 
 
     const refillEnergy =
-        calculateRefills();
+        calculateRefillEnergy();
 
 
     const totalEnergy =
@@ -444,15 +322,7 @@ function calculateEnergy() {
 
 
     const energyDifference =
-        totalEnergy -
-        requiredEnergy;
-
-
-    const possibleHits =
-        Math.floor(
-            totalEnergy /
-            ENERGY_PER_HIT
-        );
+        totalEnergy - requiredEnergy;
 
 
     setText(
@@ -460,42 +330,35 @@ function calculateEnergy() {
         formatNumber(requiredEnergy)
     );
 
-
     setText(
         "currentEnergyResult",
         formatNumber(currentEnergy)
     );
-
 
     setText(
         "xanaxEnergy",
         formatNumber(xanaxEnergy)
     );
 
-
     setText(
         "lsdEnergy",
         formatNumber(lsdEnergy)
     );
-
 
     setText(
         "newsletterEnergy",
         formatNumber(newsletterEnergy)
     );
 
-
     setText(
         "canEnergy",
         formatNumber(canEnergy)
     );
 
-
     setText(
         "refillEnergy",
         formatNumber(refillEnergy)
     );
-
 
     setText(
         "totalEnergy",
@@ -503,41 +366,45 @@ function calculateEnergy() {
     );
 
 
-    setText(
-        "energyDifference",
-        energyDifference >= 0
-            ? `+${formatNumber(energyDifference)}`
-            : formatNumber(energyDifference)
-    );
+    /*
+     * Positive = energy remaining
+     * Negative = energy shortage
+     */
+    if (energyDifference >= 0) {
 
+        setText(
+            "energyDifference",
+            "+" + formatNumber(energyDifference)
+        );
 
-    setText(
-        "hitResult",
-        `${formatNumber(possibleHits)} hits`
-    );
+    } else {
 
-
-    let progress = 0;
-
-
-    if (requiredEnergy > 0) {
-
-        progress =
-            (
-                totalEnergy /
-                requiredEnergy
-            ) * 100;
-
+        setText(
+            "energyDifference",
+            formatNumber(energyDifference)
+        );
     }
 
 
-    progress =
-        Math.min(100, progress);
+    /*
+     * Original target progress.
+     *
+     * This is intentionally based only on the
+     * original target energy requirement.
+     */
+    const progress =
+        requiredEnergy > 0
+            ? clamp(
+                (totalEnergy / requiredEnergy) * 100,
+                0,
+                100
+            )
+            : 0;
 
 
     setText(
         "energyProgressText",
-        `${progress.toFixed(1)}%`
+        formatNumber(progress, 1) + "%"
     );
 
 
@@ -546,101 +413,269 @@ function calculateEnergy() {
             "energyProgressBar"
         );
 
-
     if (progressBar) {
 
         progressBar.style.width =
-            `${progress}%`;
-
+            progress + "%";
     }
 
+
+    /*
+     * Calculate how many original hits
+     * the available energy can cover.
+     */
+    const possibleHits =
+        Math.floor(
+            totalEnergy / ENERGY_PER_HIT
+        );
+
+
+    setText(
+        "hitResult",
+        formatNumber(possibleHits) + " hits"
+    );
+
+
+    /*
+     * Automatically keep Revitalize's
+     * hit count synchronized with Target Hits
+     * unless the user has manually changed it.
+     */
+    const revitalizeHits =
+        document.getElementById("revitalizeHits");
+
+    if (revitalizeHits &&
+        document.activeElement !== revitalizeHits) {
+
+        revitalizeHits.value =
+            targetHits;
+    }
+
+
+    calculateRevitalize();
 }
 
 
 // ------------------------------------------------------------
-// Event Handlers
+// Revitalize calculator
 // ------------------------------------------------------------
 
-function setupEventHandlers() {
+function calculateRevitalize() {
 
-    const inputIds = [
+    const chanceInput =
+        document.getElementById("revitalizeChance");
 
-        "targetHits",
-        "currentEnergy",
-        "xanaxQty",
-        "lsdQty",
-        "newsletter",
-
-        "inactivityHours",
-        "donatorStatus",
-        "pointRefills",
-        "hotelRefills",
-
-        "revitalizeChance",
-        "revitalizeHits"
-
-    ];
+    const hitsInput =
+        document.getElementById("revitalizeHits");
 
 
-    ENERGY_CANS.forEach(can => {
+    if (!chanceInput || !hitsInput) {
+        return;
+    }
 
-        inputIds.push(
-            can.input
+
+    let chance =
+        parseFloat(chanceInput.value);
+
+    if (!Number.isFinite(chance)) {
+        chance = REVITALIZE_DEFAULT;
+    }
+
+
+    chance =
+        clamp(
+            Math.round(chance),
+            REVITALIZE_MIN,
+            REVITALIZE_MAX
         );
 
-    });
+
+    /*
+     * Keep the displayed input as a whole number.
+     */
+    chanceInput.value =
+        chance;
 
 
-    inputIds.forEach(id => {
+    let hits =
+        parseFloat(hitsInput.value);
 
-        const element =
-            document.getElementById(id);
-
-
-        if (!element) {
-            return;
-        }
+    if (!Number.isFinite(hits) || hits < 0) {
+        hits = 0;
+    }
 
 
-        element.addEventListener(
+    /*
+     * Revitalize bonus calculation:
+     *
+     * bonus hits =
+     * original hits / (1 - chance)
+     * minus original hits
+     *
+     * Example:
+     *
+     * 1,000 hits at 10%
+     * = 1,000 / 0.90
+     * = 1,111.11 total expected hits
+     *
+     * = 111.11 bonus hits
+     */
+    const totalExpectedHits =
+        hits / (1 - (chance / 100));
+
+
+    const bonusHits =
+        totalExpectedHits - hits;
+
+
+    setText(
+        "revitalizeChanceResult",
+        chance + "%"
+    );
+
+    setText(
+        "revitalizeHitsResult",
+        formatNumber(hits)
+    );
+
+    setText(
+        "revitalizeBonusHits",
+        formatNumber(bonusHits, 2)
+    );
+
+    setText(
+        "revitalizeTotalHits",
+        formatNumber(totalExpectedHits, 2)
+    );
+
+
+    const progressText =
+        document.getElementById(
+            "revitalizeProgressText"
+        );
+
+    if (progressText) {
+
+        progressText.textContent =
+            chance + "%";
+    }
+
+
+    const progressBar =
+        document.getElementById(
+            "revitalizeProgressBar"
+        );
+
+    if (progressBar) {
+
+        const progress =
+            (
+                (chance - REVITALIZE_MIN) /
+                (REVITALIZE_MAX - REVITALIZE_MIN)
+            ) * 100;
+
+        progressBar.style.width =
+            clamp(progress, 0, 100) + "%";
+    }
+}
+
+
+// ------------------------------------------------------------
+// Event listeners
+// ------------------------------------------------------------
+
+function attachInputListeners() {
+
+    const inputs =
+        document.querySelectorAll(
+            'input[type="number"]'
+        );
+
+
+    inputs.forEach(function (input) {
+
+        input.addEventListener(
             "input",
-            () => {
+            function () {
 
-                calculateEnergy();
-                calculateRevitalize();
+                if (
+                    input.id === "revitalizeChance" ||
+                    input.id === "revitalizeHits"
+                ) {
 
+                    calculateRevitalize();
+
+                } else {
+
+                    calculateEnergy();
+                }
             }
         );
 
 
-        element.addEventListener(
+        input.addEventListener(
             "change",
-            () => {
+            function () {
 
-                calculateEnergy();
-                calculateRevitalize();
+                if (
+                    input.id === "revitalizeChance" ||
+                    input.id === "revitalizeHits"
+                ) {
 
+                    calculateRevitalize();
+
+                } else {
+
+                    calculateEnergy();
+                }
             }
         );
-
     });
 
+
+    const newsletter =
+        document.getElementById("newsletter");
+
+    if (newsletter) {
+
+        newsletter.addEventListener(
+            "change",
+            calculateEnergy
+        );
+    }
+
+
+    const donatorStatus =
+        document.getElementById("donatorStatus");
+
+    if (donatorStatus) {
+
+        donatorStatus.addEventListener(
+            "change",
+            function () {
+
+                updateDonatorStatus();
+                calculateEnergy();
+            }
+        );
+    }
 }
 
 
 // ------------------------------------------------------------
-// Initial Calculation
+// Initialize
 // ------------------------------------------------------------
 
 document.addEventListener(
     "DOMContentLoaded",
-    () => {
+    function () {
 
-        setupEventHandlers();
+        attachInputListeners();
+
+        updateDonatorStatus();
 
         calculateEnergy();
 
         calculateRevitalize();
-
     }
 );

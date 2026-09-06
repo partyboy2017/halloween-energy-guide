@@ -19,7 +19,12 @@
             padding: 30px 20px;
             font-family: Arial, Helvetica, sans-serif;
             background:
-                radial-gradient(circle at top, #24103d 0%, #10091b 35%, #050505 75%);
+                radial-gradient(
+                    circle at top,
+                    #24103d 0%,
+                    #10091b 35%,
+                    #050505 75%
+                );
             color: #eee;
             min-height: 100vh;
         }
@@ -117,7 +122,8 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
             gap: 16px;
         }
 
@@ -166,7 +172,7 @@
             -moz-appearance: textfield;
         }
 
-        /* Mobile-friendly quantity controls */
+        /* Mobile-friendly number controls */
         .number-control {
             display: flex;
             align-items: stretch;
@@ -367,8 +373,10 @@
                     rgba(14, 7, 19, 0.9)
                 );
             color: #ff9d2e;
-            text-shadow: 0 0 10px rgba(255, 140, 0, 0.35);
-            box-shadow: inset 0 0 20px rgba(100, 30, 140, 0.08);
+            text-shadow:
+                0 0 10px rgba(255, 140, 0, 0.35);
+            box-shadow:
+                inset 0 0 20px rgba(100, 30, 140, 0.08);
         }
 
         .progress-container {
@@ -389,7 +397,8 @@
             border: 1px solid #452958;
             border-radius: 7px;
             overflow: hidden;
-            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8);
+            box-shadow:
+                inset 0 0 8px rgba(0, 0, 0, 0.8);
         }
 
         .progress-bar {
@@ -461,7 +470,8 @@
         th {
             color: #ff9b2f;
             background: rgba(80, 30, 110, 0.28);
-            text-shadow: 0 0 5px rgba(255, 140, 0, 0.2);
+            text-shadow:
+                0 0 5px rgba(255, 140, 0, 0.2);
         }
 
         td {
@@ -490,6 +500,30 @@
             text-align: center;
         }
 
+        .job-special-table th:nth-child(2),
+        .job-special-table td:nth-child(2) {
+            text-align: center;
+        }
+
+        .job-special-table th:nth-child(3),
+        .job-special-table td:nth-child(3) {
+            text-align: center;
+        }
+
+        .job-limit {
+            margin-top: 15px;
+            padding: 12px;
+            border: 1px solid #4c315f;
+            border-radius: 8px;
+            background: rgba(154, 77, 204, 0.07);
+            color: #bca9c8;
+            line-height: 1.5;
+        }
+
+        .job-limit strong {
+            color: #ff9d2e;
+        }
+
         .card:nth-of-type(2) {
             border-left-color: #d52f55;
         }
@@ -504,6 +538,10 @@
 
         .card:nth-of-type(4) {
             border-left-color: #ff9d00;
+        }
+
+        .card:nth-of-type(5) {
+            border-left-color: #5c9ad6;
         }
 
         @media (max-width: 600px) {
@@ -572,6 +610,13 @@
                 min-height: 48px;
                 font-size: 18px;
             }
+
+            .job-special-table th:nth-child(2),
+            .job-special-table td:nth-child(2),
+            .job-special-table th:nth-child(3),
+            .job-special-table td:nth-child(3) {
+                text-align: center;
+            }
         }
 
         @media (max-width: 480px) {
@@ -593,6 +638,16 @@
             .qty-button {
                 width: 46px;
                 min-width: 46px;
+            }
+
+            .job-special-table th:nth-child(2),
+            .job-special-table td:nth-child(2) {
+                display: table-cell;
+            }
+
+            .job-special-table th:nth-child(3),
+            .job-special-table td:nth-child(3) {
+                display: table-cell;
             }
         }
 
@@ -626,6 +681,8 @@
     </div>
 
 
+    <!-- MAIN ENERGY PLANNER -->
+
     <div class="card">
 
         <h2>⚔️ 1,000 Hit Energy Planner</h2>
@@ -634,22 +691,42 @@
 
             <div class="field">
                 <label for="targetHits">Target Hits</label>
-                <input type="number" id="targetHits" min="0" value="1000">
+                <input
+                    type="number"
+                    id="targetHits"
+                    min="0"
+                    value="1000"
+                >
             </div>
 
             <div class="field">
                 <label for="currentEnergy">Current Energy</label>
-                <input type="number" id="currentEnergy" min="0" value="0">
+                <input
+                    type="number"
+                    id="currentEnergy"
+                    min="0"
+                    value="0"
+                >
             </div>
 
             <div class="field">
                 <label for="xanaxQty">Xanax</label>
-                <input type="number" id="xanaxQty" min="0" value="0">
+                <input
+                    type="number"
+                    id="xanaxQty"
+                    min="0"
+                    value="0"
+                >
             </div>
 
             <div class="field">
                 <label for="lsdQty">LSD</label>
-                <input type="number" id="lsdQty" min="0" value="0">
+                <input
+                    type="number"
+                    id="lsdQty"
+                    min="0"
+                    value="0"
+                >
             </div>
 
         </div>
@@ -657,7 +734,10 @@
 
         <div class="toggle-row">
 
-            <input type="checkbox" id="newsletter">
+            <input
+                type="checkbox"
+                id="newsletter"
+            >
 
             <label for="newsletter">
                 Torn Newsletter (+250 Energy)
@@ -669,48 +749,123 @@
         <div class="result">
 
             <div class="result-row">
-                <span class="result-label">Energy required for target</span>
-                <span class="result-value" id="requiredEnergy">0</span>
+                <span class="result-label">
+                    Energy required for target
+                </span>
+                <span
+                    class="result-value"
+                    id="requiredEnergy"
+                >
+                    0
+                </span>
             </div>
 
             <div class="result-row">
-                <span class="result-label">Current Energy</span>
-                <span class="result-value" id="currentEnergyResult">0</span>
+                <span class="result-label">
+                    Current Energy
+                </span>
+                <span
+                    class="result-value"
+                    id="currentEnergyResult"
+                >
+                    0
+                </span>
             </div>
 
             <div class="result-row">
-                <span class="result-label">Energy from Xanax</span>
-                <span class="result-value" id="xanaxEnergy">0</span>
+                <span class="result-label">
+                    Energy from Xanax
+                </span>
+                <span
+                    class="result-value"
+                    id="xanaxEnergy"
+                >
+                    0
+                </span>
             </div>
 
             <div class="result-row">
-                <span class="result-label">Energy from LSD</span>
-                <span class="result-value" id="lsdEnergy">0</span>
+                <span class="result-label">
+                    Energy from LSD
+                </span>
+                <span
+                    class="result-value"
+                    id="lsdEnergy"
+                >
+                    0
+                </span>
             </div>
 
             <div class="result-row">
-                <span class="result-label">Newsletter Energy</span>
-                <span class="result-value" id="newsletterEnergy">0</span>
+                <span class="result-label">
+                    Newsletter Energy
+                </span>
+                <span
+                    class="result-value"
+                    id="newsletterEnergy"
+                >
+                    0
+                </span>
             </div>
 
             <div class="result-row">
-                <span class="result-label">Energy from cans</span>
-                <span class="result-value" id="canEnergy">0</span>
+                <span class="result-label">
+                    Energy from cans
+                </span>
+                <span
+                    class="result-value"
+                    id="canEnergy"
+                >
+                    0
+                </span>
             </div>
 
             <div class="result-row">
-                <span class="result-label">Energy from refills</span>
-                <span class="result-value" id="refillEnergy">0</span>
+                <span class="result-label">
+                    Energy from Jobs / Company Specials
+                </span>
+                <span
+                    class="result-value"
+                    id="jobEnergy"
+                >
+                    0
+                </span>
             </div>
 
             <div class="result-row">
-                <span class="result-label">Total available energy</span>
-                <span class="result-value" id="totalEnergy">0</span>
+                <span class="result-label">
+                    Energy from refills
+                </span>
+                <span
+                    class="result-value"
+                    id="refillEnergy"
+                >
+                    0
+                </span>
             </div>
 
             <div class="result-row">
-                <span class="result-label">Energy remaining / shortage</span>
-                <span class="result-value" id="energyDifference">0</span>
+                <span class="result-label">
+                    Total available energy
+                </span>
+                <span
+                    class="result-value"
+                    id="totalEnergy"
+                >
+                    0
+                </span>
+            </div>
+
+            <div class="result-row">
+                <span class="result-label">
+                    Energy remaining / shortage
+                </span>
+                <span
+                    class="result-value"
+                    id="energyDifference"
+                >
+                    0
+                </span>
             </div>
 
         </div>
@@ -724,28 +879,34 @@
             </div>
 
             <div class="progress">
-                <div class="progress-bar" id="energyProgressBar"></div>
+                <div
+                    class="progress-bar"
+                    id="energyProgressBar"
+                ></div>
             </div>
 
         </div>
 
 
-        <div class="big-result" id="hitResult">
-            0 hits
+        <div class="big-result">
+            Hits Covered:
+            <span id="hitResult">0 hits</span>
         </div>
 
     </div>
 
 
+    <!-- REVITALIZE -->
+
     <div class="card">
 
-        <h2>🔄 Revitalize Weapon Bonus Hits</h2>
+        <h2>🔥 Revitalize Weapon Bonus Hits</h2>
 
         <p class="section-note">
-            Revitalize is calculated separately from the original
-            energy requirement. Bonus hits are expected additional
-            hits generated by the weapon's Revitalize effect.
+            Estimate the expected number of bonus hits generated
+            by a Revitalize weapon.
         </p>
+
 
         <div class="grid">
 
@@ -792,18 +953,39 @@
         <div class="result">
 
             <div class="result-row">
-                <span class="result-label">Revitalize chance</span>
-                <span class="result-value" id="revitalizeChanceResult">10%</span>
+                <span class="result-label">
+                    Revitalize chance
+                </span>
+                <span
+                    class="result-value"
+                    id="revitalizeChanceResult"
+                >
+                    10%
+                </span>
             </div>
 
             <div class="result-row">
-                <span class="result-label">Hits attempted</span>
-                <span class="result-value" id="revitalizeHitsResult">1,000</span>
+                <span class="result-label">
+                    Hits attempted
+                </span>
+                <span
+                    class="result-value"
+                    id="revitalizeHitsResult"
+                >
+                    1,000
+                </span>
             </div>
 
             <div class="result-row">
-                <span class="result-label">Expected bonus hits</span>
-                <span class="result-value" id="revitalizeBonusHits">111.11</span>
+                <span class="result-label">
+                    Expected bonus hits
+                </span>
+                <span
+                    class="result-value"
+                    id="revitalizeBonusHits"
+                >
+                    111.11
+                </span>
             </div>
 
         </div>
@@ -813,14 +995,18 @@
 
             <div class="progress-label">
                 <span>Revitalize Chance</span>
-                <span id="revitalizeProgressText">10%</span>
+                <span id="revitalizeProgressText">
+                    10%
+                </span>
             </div>
 
             <div class="progress">
+
                 <div
                     class="progress-bar revitalize-bar"
                     id="revitalizeProgressBar"
                 ></div>
+
             </div>
 
         </div>
@@ -828,7 +1014,9 @@
 
         <div class="big-result">
             Expected Total Hits:
-            <span id="revitalizeTotalHits">1,111.11</span>
+            <span id="revitalizeTotalHits">
+                1,111.11
+            </span>
         </div>
 
 
@@ -842,6 +1030,8 @@
     </div>
 
 
+    <!-- ENERGY CANS -->
+
     <div class="card">
 
         <h2>🥫 Energy Cans</h2>
@@ -854,12 +1044,14 @@
         <table>
 
             <thead>
+
                 <tr>
                     <th>Can</th>
                     <th>Energy / Can</th>
                     <th>Quantity Owned</th>
                     <th>Energy</th>
                 </tr>
+
             </thead>
 
             <tbody>
@@ -868,7 +1060,13 @@
                     <td>Can of Goose Juice</td>
                     <td>5</td>
                     <td>
-                        <input class="qty-input" type="number" id="canGooseJuice" min="0" value="0">
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="canGooseJuice"
+                            min="0"
+                            value="0"
+                        >
                     </td>
                     <td id="canGooseJuiceEnergy">0</td>
                 </tr>
@@ -877,7 +1075,13 @@
                     <td>Can of Damp Valley</td>
                     <td>10</td>
                     <td>
-                        <input class="qty-input" type="number" id="canDampValley" min="0" value="0">
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="canDampValley"
+                            min="0"
+                            value="0"
+                        >
                     </td>
                     <td id="canDampValleyEnergy">0</td>
                 </tr>
@@ -886,7 +1090,13 @@
                     <td>Can of Crocozade</td>
                     <td>15</td>
                     <td>
-                        <input class="qty-input" type="number" id="canCrocozade" min="0" value="0">
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="canCrocozade"
+                            min="0"
+                            value="0"
+                        >
                     </td>
                     <td id="canCrocozadeEnergy">0</td>
                 </tr>
@@ -895,7 +1105,13 @@
                     <td>Can of Munster</td>
                     <td>20</td>
                     <td>
-                        <input class="qty-input" type="number" id="canMunster" min="0" value="0">
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="canMunster"
+                            min="0"
+                            value="0"
+                        >
                     </td>
                     <td id="canMunsterEnergy">0</td>
                 </tr>
@@ -904,7 +1120,13 @@
                     <td>Can of Santa Shooters</td>
                     <td>20</td>
                     <td>
-                        <input class="qty-input" type="number" id="canSantaShooters" min="0" value="0">
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="canSantaShooters"
+                            min="0"
+                            value="0"
+                        >
                     </td>
                     <td id="canSantaShootersEnergy">0</td>
                 </tr>
@@ -913,7 +1135,13 @@
                     <td>Can of Red Cow</td>
                     <td>25</td>
                     <td>
-                        <input class="qty-input" type="number" id="canRedCow" min="0" value="0">
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="canRedCow"
+                            min="0"
+                            value="0"
+                        >
                     </td>
                     <td id="canRedCowEnergy">0</td>
                 </tr>
@@ -922,7 +1150,13 @@
                     <td>Can of Rockstar Rudolph</td>
                     <td>25</td>
                     <td>
-                        <input class="qty-input" type="number" id="canRockstarRudolph" min="0" value="0">
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="canRockstarRudolph"
+                            min="0"
+                            value="0"
+                        >
                     </td>
                     <td id="canRockstarRudolphEnergy">0</td>
                 </tr>
@@ -931,7 +1165,13 @@
                     <td>Can of Taurine Elite</td>
                     <td>30</td>
                     <td>
-                        <input class="qty-input" type="number" id="canTaurineElite" min="0" value="0">
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="canTaurineElite"
+                            min="0"
+                            value="0"
+                        >
                     </td>
                     <td id="canTaurineEliteEnergy">0</td>
                 </tr>
@@ -940,7 +1180,13 @@
                     <td>Can of X-MASS</td>
                     <td>30</td>
                     <td>
-                        <input class="qty-input" type="number" id="canXMass" min="0" value="0">
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="canXMass"
+                            min="0"
+                            value="0"
+                        >
                     </td>
                     <td id="canXMassEnergy">0</td>
                 </tr>
@@ -957,6 +1203,260 @@
 
     </div>
 
+
+    <!-- JOBS / COMPANY SPECIALS -->
+
+    <div class="card">
+
+        <h2>💼 Jobs / Company Specials</h2>
+
+        <p class="section-note">
+            Enter the number of times you plan to use each
+            energy-granting Job or Company Special.
+            These are additional sources of energy and are included
+            in the planner's total.
+        </p>
+
+
+        <div class="job-limit">
+
+            <strong>Daily Job Point limit:</strong>
+            Energy-granting Company Specials are limited to
+            100 Job Points per day.
+
+            <br><br>
+
+            <strong>Press Pass:</strong>
+            The Television Network 10★ Press Pass costs
+            25 Job Points and has a chance to grant 300 energy.
+            It is not subject to the normal 100-JP daily energy limit.
+
+        </div>
+
+
+        <table class="job-special-table">
+
+            <thead>
+
+                <tr>
+                    <th>Job / Company Special</th>
+                    <th>JP Cost</th>
+                    <th>Energy</th>
+                    <th>Uses</th>
+                    <th>Total Energy</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>
+                        Furniture Store — Coffee Break
+                    </td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="jobCoffeeBreak"
+                            min="0"
+                            max="100"
+                            step="1"
+                            value="0"
+                        >
+                    </td>
+                    <td id="jobCoffeeBreakEnergy">0</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Pub — Pub Lunch
+                    </td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="jobPubLunch"
+                            min="0"
+                            max="100"
+                            step="1"
+                            value="0"
+                        >
+                    </td>
+                    <td id="jobPubLunchEnergy">0</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Restaurant — Free Meals
+                    </td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="jobFreeMeals"
+                            min="0"
+                            max="100"
+                            step="1"
+                            value="0"
+                        >
+                    </td>
+                    <td id="jobFreeMealsEnergy">0</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Candle Shop — Reinvigorating Therapy
+                    </td>
+                    <td>1</td>
+                    <td>5</td>
+                    <td>
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="jobReinvigoratingTherapy"
+                            min="0"
+                            max="100"
+                            step="1"
+                            value="0"
+                        >
+                    </td>
+                    <td id="jobReinvigoratingTherapyEnergy">0</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Game Shop — Overpowered
+                    </td>
+                    <td>1</td>
+                    <td>5</td>
+                    <td>
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="jobOverpowered"
+                            min="0"
+                            max="100"
+                            step="1"
+                            value="0"
+                        >
+                    </td>
+                    <td id="jobOverpoweredEnergy">0</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Farm — Early Riser
+                    </td>
+                    <td>1</td>
+                    <td>7</td>
+                    <td>
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="jobEarlyRiser"
+                            min="0"
+                            max="100"
+                            step="1"
+                            value="0"
+                        >
+                    </td>
+                    <td id="jobEarlyRiserEnergy">0</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Television Network — Press Pass
+                    </td>
+                    <td>25</td>
+                    <td>300*</td>
+                    <td>
+                        <input
+                            class="qty-input"
+                            type="number"
+                            id="jobPressPass"
+                            min="0"
+                            step="1"
+                            value="0"
+                        >
+                    </td>
+                    <td id="jobPressPassEnergy">0</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+
+        <div class="result">
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Regular Job Special JP used
+                </span>
+
+                <span
+                    class="result-value"
+                    id="regularJobJP"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Press Pass JP used
+                </span>
+
+                <span
+                    class="result-value"
+                    id="pressPassJP"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Total Job / Company Special Energy
+                </span>
+
+                <span
+                    class="result-value"
+                    id="jobTotalEnergy"
+                >
+                    0
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <p class="section-note muted">
+            * Press Pass has a chance of granting 300 energy
+            rather than guaranteeing 300 energy, so the planner
+            treats each entered use as 300 expected energy for
+            planning purposes.
+        </p>
+
+    </div>
+
+
+    <!-- ENERGY REFILLS -->
 
     <div class="card">
 
@@ -1057,6 +1557,7 @@
         <div class="result">
 
             <div class="result-row">
+
                 <span class="result-label">
                     Refill rate
                 </span>
@@ -1067,10 +1568,12 @@
                 >
                     5 energy/hour
                 </span>
+
             </div>
 
 
             <div class="result-row">
+
                 <span class="result-label">
                     Inactivity refill energy
                 </span>
@@ -1081,10 +1584,12 @@
                 >
                     0
                 </span>
+
             </div>
 
 
             <div class="result-row">
+
                 <span class="result-label">
                     Point refill energy
                 </span>
@@ -1095,10 +1600,12 @@
                 >
                     0
                 </span>
+
             </div>
 
 
             <div class="result-row">
+
                 <span class="result-label">
                     The Feathery Hotel Coupon energy
                 </span>
@@ -1109,6 +1616,7 @@
                 >
                     0
                 </span>
+
             </div>
 
         </div>
@@ -1117,12 +1625,10 @@
 
 </div>
 
+
+<!-- Mobile-friendly +/- controls -->
+
 <script>
-/*
- * Add mobile-friendly +/- controls to every number input.
- * The original input IDs and values are preserved so script.js
- * continues to work normally.
- */
 document.addEventListener("DOMContentLoaded", function () {
 
     const numberInputs = document.querySelectorAll(
@@ -1132,90 +1638,159 @@ document.addEventListener("DOMContentLoaded", function () {
     numberInputs.forEach(function (input) {
 
         const wrapper = document.createElement("div");
+
         wrapper.className = "number-control";
 
-        input.parentNode.insertBefore(wrapper, input);
+        input.parentNode.insertBefore(
+            wrapper,
+            input
+        );
+
         wrapper.appendChild(input);
 
-        const minusButton = document.createElement("button");
+
+        const minusButton =
+            document.createElement("button");
+
         minusButton.type = "button";
         minusButton.className = "qty-button";
         minusButton.textContent = "−";
+
         minusButton.setAttribute(
             "aria-label",
             "Decrease " + (input.id || "value")
         );
 
-        const plusButton = document.createElement("button");
+
+        const plusButton =
+            document.createElement("button");
+
         plusButton.type = "button";
         plusButton.className = "qty-button";
         plusButton.textContent = "+";
+
         plusButton.setAttribute(
             "aria-label",
             "Increase " + (input.id || "value")
         );
 
-        wrapper.insertBefore(minusButton, input);
-        wrapper.appendChild(plusButton);
+
+        wrapper.insertBefore(
+            minusButton,
+            input
+        );
+
+        wrapper.appendChild(
+            plusButton
+        );
+
 
         function getStep() {
-            const step = parseFloat(input.step);
-            return Number.isFinite(step) && step > 0 ? step : 1;
+
+            const step =
+                parseFloat(input.step);
+
+            return Number.isFinite(step) &&
+                step > 0
+                ? step
+                : 1;
         }
+
 
         function getMin() {
-            const min = parseFloat(input.min);
-            return Number.isFinite(min) ? min : 0;
+
+            const min =
+                parseFloat(input.min);
+
+            return Number.isFinite(min)
+                ? min
+                : 0;
         }
 
+
         function getMax() {
-            const max = parseFloat(input.max);
-            return Number.isFinite(max) ? max : Infinity;
+
+            const max =
+                parseFloat(input.max);
+
+            return Number.isFinite(max)
+                ? max
+                : Infinity;
         }
+
 
         function updateValue(change) {
 
-            let current = parseFloat(input.value);
+            let current =
+                parseFloat(input.value);
 
             if (!Number.isFinite(current)) {
                 current = getMin();
             }
 
-            const newValue = Math.min(
-                getMax(),
-                Math.max(
-                    getMin(),
-                    current + change
-                )
-            );
+
+            const newValue =
+                Math.min(
+                    getMax(),
+                    Math.max(
+                        getMin(),
+                        current + change
+                    )
+                );
+
 
             input.value = newValue;
 
-            input.dispatchEvent(
-                new Event("input", {
-                    bubbles: true
-                })
-            );
 
             input.dispatchEvent(
-                new Event("change", {
-                    bubbles: true
-                })
+                new Event(
+                    "input",
+                    {
+                        bubbles: true
+                    }
+                )
+            );
+
+
+            input.dispatchEvent(
+                new Event(
+                    "change",
+                    {
+                        bubbles: true
+                    }
+                )
             );
         }
 
-        minusButton.addEventListener("click", function () {
-            updateValue(-getStep());
-        });
 
-        plusButton.addEventListener("click", function () {
-            updateValue(getStep());
-        });
+        minusButton.addEventListener(
+            "click",
+            function () {
+
+                updateValue(
+                    -getStep()
+                );
+
+            }
+        );
+
+
+        plusButton.addEventListener(
+            "click",
+            function () {
+
+                updateValue(
+                    getStep()
+                );
+
+            }
+        );
 
     });
 
 });
 </script>
+
 
 <script src="script.js"></script>
 
